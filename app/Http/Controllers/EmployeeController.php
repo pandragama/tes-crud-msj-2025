@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class EmployeeController extends Controller
 {
@@ -75,6 +76,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('admin-only')) {
+            return redirect()->back();
+        }
         $departments = Department::all();
 
         return view('employees.create', [
@@ -88,6 +92,10 @@ class EmployeeController extends Controller
     // public function store(Request $request)
     public function store(EmployeeStoreRequest $request)
     {
+        if (Gate::denies('admin-only')) {
+            return redirect()->back();
+        }
+
         DB::beginTransaction();
 
         try {
@@ -121,6 +129,10 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        if (Gate::denies('admin-only')) {
+            return redirect()->back();
+        }
+
         $departments = Department::all();
 
         return view('employees.edit', [
@@ -134,6 +146,10 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeStoreRequest $request, Employee $employee)
     {
+        if (Gate::denies('admin-only')) {
+            return redirect()->back();
+        }
+
         DB::beginTransaction();
 
         try {
@@ -159,6 +175,10 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        if (Gate::denies('admin-only')) {
+            return redirect()->back();
+        }
+        
         DB::beginTransaction();
         $temp = $employee;
 

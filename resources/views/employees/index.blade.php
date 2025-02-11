@@ -15,9 +15,11 @@
                 </ol>
             </nav>
 
+            @can('admin-only')
             <x-redirect-button href="{{ route('employees.add') }}">
                 {{ __('Add New Data') }}
             </x-redirect-button>
+            @endcan
         </div>
 
     </x-slot>

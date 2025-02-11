@@ -14,7 +14,9 @@
                 <th class="py-3 px-6 text-left">DOB</th>
                 <th class="py-3 px-6 text-left">Dept</th>
                 <th class="py-3 px-6 text-left">Status</th>
+                @can('admin-only')
                 <th class="py-3 px-6 text-left">Actions</th>
+                @endcan
             </tr>
         </thead>
         <tbody class="text-gray-600 text-sm font-light dark:text-gray-200">
@@ -29,6 +31,7 @@
                 <td class="py-3 px-6 text-nowrap">{{ date("d/m/Y", strtotime($employee->dob)) }}</td>
                 <td class="py-3 px-6 text-nowrap">{{ $employee->department }}</td>
                 <td class="py-3 px-6 text-nowrap">{{ status_decode($employee->status) }}</td>
+                @can('admin-only')
                 <td class="py-3 px-6 text-nowrap">
                     <a href="{{ route('employees.edit', $employee->id) }}" class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">Edit</a>
                     <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
@@ -37,6 +40,7 @@
                         <button type="submit" class="text-red-500 hover:text-red-700 ml-2 dark:text-red-400 dark:hover:text-red-300" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">Hapus</button>
                     </form>
                 </td>
+                @endcan
             </tr>
             @endforeach
         </tbody>
