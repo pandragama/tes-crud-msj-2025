@@ -26,12 +26,17 @@
 
     <div class="pt-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-
-                <div id="stat-dept-table">
-                    @include('employees.partials.employee_stat_dept_table', ['employeeStatusCountsByDepartment' => $employeeStatusCountsByDepartment])
+            <div class="flex flex-wrap-reverse gap-8">
+                <div class="flex-1 min-w-min bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div id="stat-dept-table">
+                        @include('employees.partials.employee_stat_dept_table', ['employeeStatusCountsByDepartment' => $employeeStatusCountsByDepartment])
+                    </div>
                 </div>
-
+                <div class="min-w-min lg:flex-none flex-1 flex justify-center items-center px-6 py-4 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="chart-container relative h-[290px]">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -49,7 +54,7 @@
     </div>
 
     <div class="pb-12">
-    <!-- <div class="py-12"> -->
+        <!-- <div class="py-12"> -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg" x-data="pagination()">
 
@@ -88,5 +93,52 @@
             }
         }
     </script>
+
+    <!--  tell the script to be a module (for chart.js undefined problem) -->
+    <script type="module" > 
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'bottom'
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Doughnut Chart'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+    </script>
+
 
 </x-app-layout>
