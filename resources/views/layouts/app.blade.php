@@ -37,10 +37,21 @@
     @if(session('swal-alert-success'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: 'Sukses!',
-                text: "{{ session('swal-alert-success') }}",
+            ToastInstance.fire({
                 icon: 'success',
+                title: 'Sukses!',
+                text: "{{ session('swal-alert-success') }}"
+            });
+        });
+    </script>
+    @endif
+    @if(session('swal-alert-error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            SwalInstance.fire({
+                title: 'Sukses!',
+                text: "{{ session('swal-alert-error') }}",
+                icon: 'error',
                 confirmButtonText: 'OK'
             });
         });

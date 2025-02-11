@@ -34,11 +34,12 @@
                 @can('admin-only')
                 <td class="py-3 px-6 text-nowrap">
                     <a href="{{ route('employees.edit', $employee->id) }}" class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">Edit</a>
-                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
+                    <form id="delete-form-{{ $employee->id }}" action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-red-500 hover:text-red-700 ml-2 dark:text-red-400 dark:hover:text-red-300" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">Hapus</button>
+                        <button type="submit" class="delete-button text-red-500 hover:text-red-700 ml-2 dark:text-red-400 dark:hover:text-red-300" data-id="{{ $employee->id }}">Hapus</button>
                     </form>
+                    <!-- <button type="submit" class="text-red-500 hover:text-red-700 ml-2 dark:text-red-400 dark:hover:text-red-300" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">Hapus</button> -->
                 </td>
                 @endcan
             </tr>
@@ -51,3 +52,54 @@
 <div class="my-4 px-4">
     {{ $employees->links() }} <!-- Menampilkan tautan pagination -->
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const employeeId = this.getAttribute('data-id');
+                const form = document.getElementById(`delete-form-${employeeId}`);
+
+                SwalInstance.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Anda tidak dapat mengembalikan data ini!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+
+<!-- <script>
+    function confirmDelete () {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Anda tidak dapat mengembalikan data ini!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form').submit();
+            }
+        });
+    };
+</script> -->
