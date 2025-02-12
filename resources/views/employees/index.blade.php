@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <!-- <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Employees Data Table') }}
+            {{ __('Employees Data Report') }}
         </h2> -->
 
         <div class="flex flex-row justify-between">
@@ -9,7 +9,7 @@
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li>
                         <div class="flex items-center">
-                            <span class="text-sm font-medium text-gray-700 dark:text-white">Employees Data Table</span>
+                            <span class="text-sm font-medium text-gray-700 dark:text-white">Employees Data Report</span>
                         </div>
                     </li>
                 </ol>
